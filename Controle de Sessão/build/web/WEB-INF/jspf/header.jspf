@@ -1,0 +1,31 @@
+
+<%@ page pageEncoding="UTF-8" %>
+
+<%
+    if (request.getParameter ("login-form")!=null){
+        String user = request.getParameter("login-user");
+        session.setAttribute("login-user", user);
+        response.sendRedirect(request.getRequestURI());
+    } else if (request.getParameter("logout-form")!=null){
+        session.removeAttribute("login-user");
+        response.sendRedirect(request.getRequestURI());
+    }
+    String sessionLoginUser = (String)session.getAttribute("login-user");
+    
+%>
+
+<h1>Controle de Sessão</h1>
+<%if(sessionLoginUser==null){%>
+<form>
+    <input type="text" name="login-user"/>
+    <input type="submit" name="login-form" value="Entrar"/>
+</form>
+<%}else{%>
+<form>
+
+    Bem Vindo, <b><%= sessionLoginUser %></b>
+    <input type="submit" name="logout-form" value="Sair"/>
+</form>
+<%}%>
+
+<hr/>
